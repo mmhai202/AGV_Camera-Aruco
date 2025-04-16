@@ -19,15 +19,8 @@ void setup() {
   astar.begin();
   blynk.begin(&vehicle);
   std::vector<Node*> path = astar.findPath(astar.start, astar.goal);
-  Serial.println("Path found:");
-  for (Node* node : path) {
-    Serial.print("Node ID: ");
-    Serial.print(node->id);
-    Serial.print(" - Position: ");
-    Serial.print(node->x);
-    Serial.print(", ");
-    Serial.println(node->y);
-  }
+  for (Node* node : path) {Serial.print(node->id); Serial.print("->");}
+  Serial.println("\n");
 }
 
 void loop() {
