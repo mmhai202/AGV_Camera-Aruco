@@ -3,8 +3,7 @@
 
 class BlynkHandler {
 public:
-  void begin();
-  void set_vehicle(Vehicle* v);
+  void begin(Vehicle* v);
   void run();
   static Vehicle* vehicle;
 };

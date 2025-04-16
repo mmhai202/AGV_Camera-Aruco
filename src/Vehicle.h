@@ -1,17 +1,19 @@
 #pragma once
 #include <Arduino.h>
+#include "Encoder.h"
+#include "Uart2.h"
 
 class Vehicle {
 public:
-  uint8_t speed;
-  void begin();
+  int16_t speed;
+  bool forward_10cm;
+  bool turnleft_90deg;
+  bool turnright_90deg;
+  void begin(Encoder* encoder, Uart2* _uart2);
   void stop();
-  void forward  (uint8_t pwm);
-  void back     (uint8_t pwm);
-  void left     (uint8_t pwm);
-  void right    (uint8_t pwm);
-  void turnLeft (uint8_t pwm);
-  void turnRight(uint8_t pwm);
+  void left(int16_t pwm);
+  void right(int16_t pwm);
 private:
-  void _setDir(bool lFwd, bool rFwd);
+  Encoder* _encoder;
+  Uart2* _uart2;
 };
