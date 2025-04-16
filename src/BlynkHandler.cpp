@@ -9,9 +9,6 @@ void BlynkHandler::begin(Vehicle* v){
   printf("Connected to Blynk!\n");
   BlynkHandler::vehicle = v;
   BlynkHandler::vehicle->speed = 120; // Default speed
-  BlynkHandler::vehicle->forward_10cm = false;
-  BlynkHandler::vehicle->turnleft_90deg = false;
-  BlynkHandler::vehicle->turnright_90deg = false;
   printf("Default Speed: %d\n", BlynkHandler::vehicle->speed);
 }
 void BlynkHandler::run() { Blynk.run();}
@@ -54,26 +51,3 @@ BLYNK_WRITE(V3){
 BLYNK_WRITE(V4){ BlynkHandler::vehicle->speed = map(param.asInt(),1,10,1,10)*10+100; 
                  printf("Speed: %d\n", BlynkHandler::vehicle->speed);}
 
-BLYNK_WRITE(V8){ 
-  if(param.asInt()) {
-    BlynkHandler::vehicle->forward_10cm = true;
-  } else {
-    BlynkHandler::vehicle->forward_10cm = false;
-  }
-}
-
-BLYNK_WRITE(V9){ 
-  if(param.asInt()) {
-    BlynkHandler::vehicle->turnleft_90deg = true;
-  } else {
-    BlynkHandler::vehicle->turnleft_90deg = false;
-  }
-}
-
-BLYNK_WRITE(V10){ 
-  if(param.asInt()) {
-    BlynkHandler::vehicle->turnright_90deg = true;
-  } else {
-    BlynkHandler::vehicle->turnright_90deg = false;
-  }
-}

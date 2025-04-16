@@ -2,20 +2,31 @@
 #include "AStar.h"
 #include <algorithm>
 
-AStar::AStar(std::vector<Node*>& grid) {
-  this->grid = grid;
+void AStar::begin() {
+  // Tạo danh sách các node ArUco (ID 0 đến 11 với vị trí x, y)
+  for (int i = 0; i < 12; i++) {
+    Node* node = new Node();
+    node->id = i;
+    node->x = i % 4;  // Xác định tọa độ x
+    node->y = i / 4;  // Xác định tọa độ y
+    node->gCost = 100;  // Chi phí gCost khởi tạo lớn
+    node->hCost = 0;
+    node->parent = nullptr;
+    _grid.push_back(node);
+  }
+  start = _grid[0];  // ArUco ID 0
+  goal = _grid[11];  // ArUco ID 11
+  //_grid[3]->isBlocked = true;
 }
 
-int AStar::heuristic(Node* current, Node* goal) {
-  return abs(current->x - goal->x) + abs(current->y - goal->y);  // Khoảng cách Manhattan
-}
+int AStar::_heuristic(Node* current, Node* goal) {return abs(current->x - goal->x) + abs(current->y - goal->y);}
 
 std::vector<Node*> AStar::findPath(Node* start, Node* goal) {
   std::priority_queue<Node*, std::vector<Node*>, CompareNode> openList;
   std::map<int, bool> closedList;
 
   start->gCost = 0;
-  start->hCost = heuristic(start, goal);
+  start->hCost = _heuristic(start, goal);
   openList.push(start);
 
   while (!openList.empty()) {
@@ -42,7 +53,7 @@ std::vector<Node*> AStar::findPath(Node* start, Node* goal) {
 
       // Kiểm tra nếu node mới hợp lệ (trong phạm vi bản đồ và không phải vật cản)
       if (newX >= 0 && newX < 4 && newY >= 0 && newY < 3) {
-        Node* neighbor = grid[newX + newY * 4];  // Lấy node lân cận
+        Node* neighbor = _grid[newX + newY * 4];  // Lấy node lân cận
 
         if (neighbor->isBlocked || closedList[neighbor->id]) continue;  // Nếu node là vật cản hoặc đã thăm, bỏ qua
 
@@ -50,7 +61,7 @@ std::vector<Node*> AStar::findPath(Node* start, Node* goal) {
         if (tentativeGCost < neighbor->gCost || !closedList[neighbor->id]) {
           neighbor->parent = current;
           neighbor->gCost = tentativeGCost;
-          neighbor->hCost = heuristic(neighbor, goal);
+          neighbor->hCost = _heuristic(neighbor, goal);
           openList.push(neighbor);  // Thêm neighbor vào openList
         }
       }

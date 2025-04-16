@@ -11,10 +11,9 @@ struct Node {
   int hCost;
   int fCost() { return gCost + hCost; }
   Node* parent;
-  bool isBlocked = false;  // Đánh dấu node này có vật cản không
+  bool isBlocked = false;
 };
 
-// Cấu trúc so sánh để sắp xếp priority_queue
 struct CompareNode {
   bool operator()(Node* a, Node* b) {
     return a->fCost() > b->fCost();  // So sánh fCost của các node
@@ -23,10 +22,12 @@ struct CompareNode {
 
 class AStar {
 public:
-  AStar(std::vector<Node*>& grid);
+  Node* start = nullptr;
+  Node* goal = nullptr;
+  void begin();
   std::vector<Node*> findPath(Node* start, Node* goal);
 
 private:
-  int heuristic(Node* current, Node* goal);
-  std::vector<Node*> grid;
+  int _heuristic(Node* current, Node* goal);
+  std::vector<Node*> _grid;
 };
