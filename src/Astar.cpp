@@ -7,8 +7,8 @@ void AStar::begin() {
   for (int i = 0; i < 12; i++) {
     Node* node = new Node();
     node->id = i;
-    node->x = i % 4;  // Xác định tọa độ x
-    node->y = i / 4;  // Xác định tọa độ y
+    node->x = i % 4;  // 4 cột
+    node->y = i / 4;  // 3 hàng
     node->gCost = 100;  // Chi phí gCost khởi tạo lớn
     node->hCost = 0;
     node->parent = nullptr;

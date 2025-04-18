@@ -10,6 +10,7 @@ public:
   void reset();
   int getL();
   int getR();
+  static bool isCounting;
 private:
   static void IRAM_ATTR isr1();
   static void IRAM_ATTR isr2();

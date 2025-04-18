@@ -12,6 +12,6 @@ Data Uart2::read(){
   d.id = s.substring(0,c1).toInt();
   d.x  = s.substring(c1+1,c2).toInt();
   d.y  = s.substring(c2+1,c3).toInt();
-  d.angle = s.substring(c3+1).toFloat();
+  d.angle = s.substring(c3+1).toInt();
   return d;
 }

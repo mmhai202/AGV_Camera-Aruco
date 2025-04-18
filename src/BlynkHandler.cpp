@@ -8,10 +8,9 @@ void BlynkHandler::begin(Vehicle* v){
   Blynk.begin(BLYNK_AUTH_TOKEN, WIFI_SSID, WIFI_PASS);
   printf("Connected to Blynk!\n");
   BlynkHandler::vehicle = v;
-  BlynkHandler::vehicle->speed = 120; // Default speed
-  printf("Default Speed: %d\n", BlynkHandler::vehicle->speed);
 }
 void BlynkHandler::run() { Blynk.run();}
+void BlynkHandler::write(int pin, int value) { Blynk.virtualWrite(pin, value);}
 BLYNK_WRITE(V0){ 
   if(param.asInt()) {
     BlynkHandler::vehicle->left(BlynkHandler::vehicle->speed);
@@ -51,3 +50,20 @@ BLYNK_WRITE(V3){
 BLYNK_WRITE(V4){ BlynkHandler::vehicle->speed = map(param.asInt(),1,10,1,10)*10+100; 
                  printf("Speed: %d\n", BlynkHandler::vehicle->speed);}
 
+BLYNK_WRITE(V8){ 
+  if(param.asInt()) {
+    BlynkHandler::vehicle->f10 = true;
+  }
+}
+
+BLYNK_WRITE(V9){ 
+  if(param.asInt()) {
+    BlynkHandler::vehicle->l90 = true;
+  }
+}
+
+BLYNK_WRITE(V10){ 
+  if(param.asInt()) {
+    BlynkHandler::vehicle->r90 = true;
+  }
+}
